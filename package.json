@@ -1,0 +1,35 @@
+{
+	"private": true,
+	"name": "db-prices-viz-web",
+	"description": "Find out when to buy DB tickets.",
+	"version": "0.1.0",
+	"keywords": ["todo"],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "http://derhuerst.github.io/db-prices-viz-web/",
+	"repository": "derhuerst/db-prices-viz-web",
+	"bugs": "https://github.com/derhuerst/db-prices-viz-web/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
+	"devDependencies": {
+		"browserify": "^14.3.0",
+		"es2020": "^1.1.9",
+		"uglify-js": "mishoo/UglifyJS2#harmony",
+		"wzrd": "^1.5.0"
+	},
+	"scripts": {
+		"bundle": "browserify -t es2020 index.js > dist/bundle.js",
+		"minify": "cat dist/bundle.js | uglifyjs -mc > dist/bundle.min.js",
+		"build": "npm run bundle && npm run minify",
+		"start": "cd dist; wzrd ../index.js:bundle.js -- -t es2020"
+	},
+	"dependencies": {
+		"csjs": "^1.0.6",
+		"debounce": "^1.0.0",
+		"dom-delegator": "^13.1.0",
+		"global": "^4.3.1",
+		"insert-styles": "^1.2.1",
+		"virtual-dom": "^2.1.1"
+	}
+}
