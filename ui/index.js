@@ -74,23 +74,18 @@ const renderResult = (state, actions) => {
 	if (state.result.length === 0) return h('div', {}, 'no data')
 
 	const data = state.result
-	.sort((a, b) => {
-		const dA = new Date(a.requestDate)
-		const dB = new Date(b.requestDate)
-		return dA - dB
-	})
 	.map((journey) => {
 		const d1 = new Date(journey.requestDate)
 		const d2 = new Date(journey.trips[0].start)
 		return {
-			label: ms(d2 - d1),
-			value: journey.offer.price
+			dTime: d2 - d1,
+			price: journey.offer.price,
+			label: ms(d2 - d1) + ' ' + journey.offer.price + '€'
 		}
 	})
+	.sort((a, b) => b.dTime - a.dTime)
 
-	return renderGraph([
-		{title: 'bar', color: '#2980b9', data}
-	])
+	return renderGraph(data, 'dTime', 'price')
 }
 
 const render = (state, actions) => {
