@@ -13,6 +13,30 @@ const render = require('./ui')
 
 
 
+const presets = {
+	a: {
+		from: '8011160', // Berlin
+		to: '8000105', // Frankfurt Main
+		departure: new Date('2017-02-02T11:02:00'),
+		arrival: new Date('2017-02-02T15:37:00'),
+		lines: ['ICE 1730', 'ICE 1558']
+	},
+	b: {
+		from: '8011160', // Berlin
+		to: '8000261', // München
+		departure: new Date('2017-02-14T12:30:00'),
+		arrival: new Date('2017-02-14T19:16:00'),
+		lines: ['ICE 2301']
+	},
+	c: {
+		from: '8011160', // Berlin
+		to: '8002549', // Hamburg
+		departure: new Date('2017-03-14T20:42:00'),
+		arrival: new Date('2017-03-14T23:23:00'),
+		lines: ['ICE 1504']
+	}
+}
+
 const now = new Date()
 now.setUTCMilliseconds(0)
 now.setUTCSeconds(0)
@@ -24,10 +48,16 @@ const state = {
 	arrival: now,
 	lines: null,
 	pending: false,
-	result: null,
+	result: []
 }
 
 
+
+const setPreset = (id) => {
+	if (!presets[id]) return
+	Object.assign(state, presets[id])
+	rerender()
+}
 
 const setFrom = (id) => {
 	state.from = id
@@ -92,7 +122,11 @@ const search = () => {
 	.catch(console.error)
 }
 
-const actions = {setFrom, setTo, setDeparture, setArrival, setLines, search}
+const actions = {
+	setPreset,
+	setFrom, setTo, setDeparture, setArrival, setLines,
+	search
+}
 
 
 

@@ -19,6 +19,18 @@ const renderForm = (state, actions) => {
 		action: '/',
 		className: styles.form + ''
 	}, [
+		h('button', {
+			type: 'button',
+			'onclick': () => actions.setPreset('a')
+		}, 'preset A'),
+		h('button', {
+			type: 'button',
+			'onclick': () => actions.setPreset('b')
+		}, 'preset B'),
+		h('button', {
+			type: 'button',
+			'onclick': () => actions.setPreset('c')
+		}, 'preset C'),
 		h('input', {
 			type: 'text',
 			placeholder: 'from (station id)',
