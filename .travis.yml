@@ -6,10 +6,3 @@ script:
   - npm run build
 after_script:
   - ls -lh dist/bundle.*
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
-  local_dir: dist
