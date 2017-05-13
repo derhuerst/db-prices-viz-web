@@ -27,7 +27,6 @@
 	"dependencies": {
 		"csjs": "^1.0.6",
 		"db-prices-viz": "derhuerst/db-prices-viz",
-		"debounce": "^1.0.0",
 		"dom-delegator": "^13.1.0",
 		"global": "^4.3.1",
 		"insert-styles": "^1.2.1",

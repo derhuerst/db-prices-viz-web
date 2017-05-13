@@ -1,7 +1,5 @@
 'use strict'
 
-// const debounce = require('debounce')
-const delegator = require('dom-delegator')
 const document = require('global/document')
 const createElement = require('virtual-dom/create-element')
 const diff = require('virtual-dom/diff')
@@ -85,11 +83,6 @@ const search = () => {
 const actions = {setFrom, setTo, setDeparture, setArrival, setLines, search}
 
 
-
-const del = delegator()
-del.listenTo('submit')
-del.listenTo('keypress')
-del.listenTo('click')
 
 let tree = render(state, actions)
 let root = createElement(tree)
