@@ -47,6 +47,7 @@ const state = {
 	departure: now,
 	arrival: now,
 	lines: null,
+	showLabels: true,
 	pending: false,
 	result: []
 }
@@ -90,6 +91,11 @@ const setLines = (lines) => {
 	rerender()
 }
 
+const setShowLabels = (showLabels) => {
+	state.showLabels = !!showLabels
+	rerender()
+}
+
 const search = () => {
 	state.pending = true
 	rerender()
@@ -125,6 +131,7 @@ const search = () => {
 const actions = {
 	setPreset,
 	setFrom, setTo, setDeparture, setArrival, setLines,
+	setShowLabels,
 	search
 }
 

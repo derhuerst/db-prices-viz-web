@@ -3,8 +3,7 @@
 
 const h = require('virtual-dom/virtual-hyperscript/svg')
 
-const graph = (sets, xProp, yProp) => {
-	console.log(sets)
+const graph = (sets, xProp, yProp, showLabels = true) => {
 	let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
 
 	for (let items of sets) {
@@ -51,7 +50,7 @@ const graph = (sets, xProp, yProp) => {
 			return h('polyline', {
 				points: line.join(' '),
 				stroke: items[0].color,
-				'stroke-width': '.5px',
+				'stroke-width': '.3px',
 				fill: 'none'
 			})
 		}),
@@ -59,11 +58,11 @@ const graph = (sets, xProp, yProp) => {
 		sets.map((items) => {
 			return h('g', {}, items.map((item) => {
 				const {x, y} = project(item[xProp], item[yProp])
-				const drawText = !isTextAt[x + '-' + y]
+				const showLabel = showLabels && !isTextAt[x + '-' + y]
 				isTextAt[x + '-' + y] = true
 
 				return h('g', {}, [
-					drawText ? h('text', {
+					showLabel ? h('text', {
 						x, y,
 						fill: '#666',
 						style: 'font-size: 2px',
@@ -72,7 +71,7 @@ const graph = (sets, xProp, yProp) => {
 					h('circle', {
 						cx: x,
 						cy: y,
-						r: .7,
+						r: .5,
 						fill: item.color
 					})
 				])

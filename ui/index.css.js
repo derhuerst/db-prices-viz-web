@@ -13,6 +13,21 @@ const styles = css `
 	margin: 0 auto;
 	max-width: 30rem;
 }
+
+.grid {
+	display: flex;
+}
+.grid .cell {
+	flex-basis: 50%;
+	margin-left: .25rem;
+	margin-right: .25rem;
+}
+.grid .cell.left {
+	margin-left: 0;
+}
+.grid .cell.right {
+	margin-right: 0;
+}
 `
 
 module.exports = styles
