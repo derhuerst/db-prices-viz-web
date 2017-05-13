@@ -1,35 +1,77 @@
 'use strict'
 
 // const debounce = require('debounce')
-// const delegator = require('dom-delegator')
+const delegator = require('dom-delegator')
 const document = require('global/document')
 const createElement = require('virtual-dom/create-element')
 const diff = require('virtual-dom/diff')
 const patch = require('virtual-dom/patch')
-// const vbb = require('vbb-client')
-// const scrollIntoView = require('scroll-into-view')
 
 const styles = require('./ui/styles')
 const render = require('./ui')
 
 
 
+const now = new Date()
+now.setUTCMilliseconds(0)
+now.setUTCSeconds(0)
+
 const state = {
+	from: '',
+	to: '',
+	departure: now,
+	arrival: now,
+	lines: null,
+	pending: false,
+	result: null,
 }
 
 
 
-const foo = (bar) => {
+const setFrom = (id) => {
+	state.from = id
 	rerender()
 }
 
-const actions = {
-	foo
+const setTo = (id) => {
+	state.to = id
+	rerender()
 }
 
+const setDeparture = (date) => {
+	const d = new Date(date)
+	if (isNaN(+d)) return
+	state.departure = d
+	rerender()
+}
+
+const setArrival = (date) => {
+	const d = new Date(date)
+	if (isNaN(+d)) return
+	state.arrival = d
+	rerender()
+}
+
+const setLines = (lines) => {
+	const filled = lines.filter((l) => !!l.trim())
+	if (filled.length === 0 || lines.length !== filled.length) return
+	state.lines = lines
+	rerender()
+}
+
+const search = () => {
+	state.pending = !state.pending
+	rerender()
+}
+
+const actions = {setFrom, setTo, setDeparture, setArrival, setLines, search}
 
 
-// delegator().listenTo('submit')
+
+const del = delegator()
+del.listenTo('submit')
+del.listenTo('keypress')
+del.listenTo('click')
 
 let tree = render(state, actions)
 let root = createElement(tree)
