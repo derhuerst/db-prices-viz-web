@@ -30,6 +30,7 @@
 		"dom-delegator": "^13.1.0",
 		"global": "^4.3.1",
 		"insert-styles": "^1.2.1",
+		"ms": "^1.0.0",
 		"virtual-dom": "^2.1.1"
 	}
 }

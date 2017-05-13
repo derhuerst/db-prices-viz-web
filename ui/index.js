@@ -1,14 +1,28 @@
 'use strict'
 
 const h = require('virtual-dom/h')
+const ms = require('ms')
 
 const styles = require('./index.css.js')
-
-// const renderBar = require('./bar')
-// const renderMap = require('./map')
+const renderGraph = require('./graph')
 
 const result = (state, actions) => {
-	return h('div', {}, [])
+	if (state.result.length === 0) return h('div', {}, 'no data')
+
+	const data = state.result.map((journey) => {
+		const d1 = new Date(journey.requestDate)
+		const d2 = new Date(journey.trips[0].start)
+		return {
+			label: ms(d2 - d1),
+			value: journey.offer.price
+		}
+	})
+
+	return h('div', {}, [
+		renderGraph([
+			{title: 'bar', color: '#2980b9', data}
+		])
+	])
 }
 
 const render = (state, actions) => {
