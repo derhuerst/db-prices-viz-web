@@ -73,19 +73,7 @@ const renderResult = (state, actions) => {
 	if (!Array.isArray(state.result)) return null
 	if (state.result.length === 0) return h('div', {}, 'no data')
 
-	const data = state.result
-	.map((journey) => {
-		const d1 = new Date(journey.requestDate)
-		const d2 = new Date(journey.trips[0].start)
-		return {
-			dTime: d2 - d1,
-			price: journey.offer.price,
-			label: ms(d2 - d1) + ' ' + journey.offer.price + '€'
-		}
-	})
-	.sort((a, b) => b.dTime - a.dTime)
-
-	return renderGraph(data, 'dTime', 'price')
+	return renderGraph(state.result, 'dTime', 'price')
 }
 
 const render = (state, actions) => {

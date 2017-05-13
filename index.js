@@ -5,6 +5,8 @@ const createElement = require('virtual-dom/create-element')
 const diff = require('virtual-dom/diff')
 const patch = require('virtual-dom/patch')
 const prices = require('db-prices-viz/client')
+const ms = require('ms')
+const randomColor = require('random-color')
 
 const styles = require('./ui/styles')
 const render = require('./ui')
@@ -67,12 +69,22 @@ const search = () => {
 	.then((s) => {
 		s.on('error', console.error)
 
-		const prices = []
-		s.on('data', (price) => {
-			prices.push(price)
+		const color = randomColor().hexString()
+		const journeys = []
+
+		s.on('data', (journey) => {
+			const d1 = new Date(journey.requestDate)
+			const d2 = new Date(journey.trips[0].start)
+			journeys.push({
+				dTime: d2 - d1,
+				price: journey.offer.price,
+				label: ms(d2 - d1) + ' ' + journey.offer.price + '€',
+				color
+			})
 		})
 		s.once('end', () => {
-			state.result = prices
+			journeys.sort((a, b) => b.dTime - a.dTime)
+			state.result.push(journeys)
 			state.pending = false
 			rerender()
 		})
