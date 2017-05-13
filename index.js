@@ -6,6 +6,7 @@ const document = require('global/document')
 const createElement = require('virtual-dom/create-element')
 const diff = require('virtual-dom/diff')
 const patch = require('virtual-dom/patch')
+const prices = require('db-prices-viz/client')
 
 const styles = require('./ui/styles')
 const render = require('./ui')
@@ -60,8 +61,25 @@ const setLines = (lines) => {
 }
 
 const search = () => {
-	state.pending = !state.pending
+	state.pending = true
 	rerender()
+
+	const s = state
+	prices(s.from, s.to, s.departure, s.arrival, s.lines)
+	.then((s) => {
+		s.on('error', console.error)
+
+		const prices = []
+		s.on('data', (price) => {
+			prices.push(price)
+		})
+		s.once('end', () => {
+			state.result = prices
+			state.pending = false
+			rerender()
+		})
+	})
+	.catch(console.error)
 }
 
 const actions = {setFrom, setTo, setDeparture, setArrival, setLines, search}
