@@ -29,6 +29,8 @@ const graph = (sets, xProp, yProp) => {
 		y: height - height * (yVal - minY) / deltaY
 	})
 
+	const isTextAt = {}
+
 	return h('svg', {
 		viewBox: `-5 -10 ${width + 10} ${height + 20}`,
 		xmlns: 'http://www.w3.org/2000/svg',
@@ -57,14 +59,16 @@ const graph = (sets, xProp, yProp) => {
 		sets.map((items) => {
 			return h('g', {}, items.map((item) => {
 				const {x, y} = project(item[xProp], item[yProp])
+				const drawText = !isTextAt[x + '-' + y]
+				isTextAt[x + '-' + y] = true
 
 				return h('g', {}, [
-					h('text', {
+					drawText ? h('text', {
 						x, y,
 						fill: '#666',
-						style: 'font-size: 2.5px',
-						transform: `rotate(-90 ${x} ${y}) translate(2 1)`
-					}, item.label),
+						style: 'font-size: 2px',
+						transform: `rotate(-90 ${x} ${y}) translate(1 1)`
+					}, item.label) : null,
 					h('circle', {
 						cx: x,
 						cy: y,

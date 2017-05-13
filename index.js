@@ -5,7 +5,7 @@ const createElement = require('virtual-dom/create-element')
 const diff = require('virtual-dom/diff')
 const patch = require('virtual-dom/patch')
 const prices = require('db-prices-viz/client')
-const ms = require('ms')
+// const ms = require('ms')
 const randomColor = require('random-color')
 
 const styles = require('./ui/styles')
@@ -108,7 +108,7 @@ const search = () => {
 			journeys.push({
 				dTime: d2 - d1,
 				price: journey.offer.price,
-				label: ms(d2 - d1) + ' ' + journey.offer.price + '€',
+				label: journey.offer.price + '€',
 				color
 			})
 		})
